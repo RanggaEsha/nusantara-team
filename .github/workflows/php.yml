@@ -1,0 +1,23 @@
+name: PHP CD
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Deploy using SSH
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secret.HOST }}
+        username: ${{ secret.USERNAME }}
+        key: ${{ secret.PRIVATE_KEY }}
+        port: 22
+        script: |
+          cd /var/www/html
+          git pull origin main
