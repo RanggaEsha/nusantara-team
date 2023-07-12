@@ -1,45 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-
-<style>
-    
-</style>
-
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
     <!-- MDB -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.css" rel="stylesheet">
+    
     <!-- Carousel -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <title>Infinite card2 Slider JavaScript | CodingNepal</title>
-    <link rel="stylesheet" href="../style.css">
-    <link rel="stylesheet" href="../style2.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <title>Infinite card2 Slider JavaScript | CodingNepal</title>
+      <!-- CSS -->
+        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/search.css">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Fontawesome Link for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
-    <script src="script.js" defer></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+      <script src="../js/script.js" defer></script>
+      
+      <script src="../js/script3.js" defer></script>
     <!-- Tawks.To -->
-    <script type="text/javascript">
-      var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-      (function(){
-      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-      s1.async=true;
-      s1.src='https://embed.tawk.to/64834eadcc26a871b0219789/1h2gemlu7';
-      s1.charset='UTF-8';
-      s1.setAttribute('crossorigin','*');
-      s0.parentNode.insertBefore(s1,s0);
-      })();
+        <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true;
+        s1.src='https://embed.tawk.to/64834eadcc26a871b0219789/1h2gemlu7';
+        s1.charset='UTF-8';
+        s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
       </script>
-
-<link rel="stylesheet" href="../css/search.css">
-  <title>Hasil Pencarian</title>
-
-</head>
-<body>
-
 
 <!-- Navbar Atas -->
 <nav class="navbar navbar-expand-lg navbar-dark nv-atas-color">
@@ -177,11 +167,10 @@
     </nav>
     <!-- Navrbar -->
 
-
 <!-------------------------- Hasil Pencarian ------------------------->
 
 
-  <div class="main-result-container">
+<div class="main-result-container">
   <h3>Hasil Pencarian</h3>
 
     <div class="search-form">
@@ -190,20 +179,16 @@
     <div class="second-result-container">
     <?php
 // Koneksi ke database
-$servername = 'localhost';
-$username = 'root';
-$password = '';
-$dbname = "nusantara";
-$koneksi = mysqli_connect($servername, $username, $password, $dbname);
+include 'koneksi.php';
 
 // Periksa apakah ada permintaan pencarian yang dikirimkan
 if (isset($_POST['search_submit'])) {
     $searchQuery = $_POST['search_query'];
 
     // Query ke database untuk mencari data dari dua tabel
-    $query = "SELECT title, author, price, image FROM books WHERE title LIKE '%$searchQuery%'
+    $query = "SELECT id, title, author, price, image FROM books WHERE title LIKE '%$searchQuery%' OR author LIKE '%$searchQuery%'
                 UNION
-                SELECT judul, author, price, image FROM buku_promo WHERE judul LIKE '%$searchQuery%'";
+                SELECT id, judul, author, price, image FROM buku_promo WHERE judul LIKE '%$searchQuery%' OR author LIKE '%$searchQuery%'";
     $result = mysqli_query($koneksi, $query);
 
     // Tampilkan hasil pencarian
@@ -212,7 +197,8 @@ if (isset($_POST['search_submit'])) {
             echo '<div class="result-item">';
             echo '<br>';
             $imagePath = '../' . $row['image']; // Menambahkan "../" sebelum path gambar
-            echo '<img src="' . $imagePath . '" alt="Book Image">';
+            echo '<a href="../halamanbukupromo/detail_buku_' . basename($imagePath, '.php') . '_' . $row['id'] . '.php"><img src="' . $imagePath . '" alt="Book Image"></a>';
+
             echo '<h1 class="tolol"> ' . $row['title'] . '</h1>';
             echo '<h2>' . $row['author'] . '</h2>';
             echo '<p>Rp. ' . number_format($row['price'], 0, ',', '.') . '</p>';
@@ -223,13 +209,3 @@ if (isset($_POST['search_submit'])) {
     }
 }
 ?>
-
-    </div>
-  </div>
-
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-   
-</body>
-</html>
-

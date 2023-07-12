@@ -567,12 +567,12 @@ body {
 
 .container-isi h3 {
   text-align: center;
-  color: #333333;
+  color: black;
 }
 
 .container-isi p {
   text-align: center;
-  color: #666666;
+  color: black;
 }
 
 .error-message {
@@ -734,6 +734,7 @@ body {
   justify-content: center;
   align-items: center;
   margin-top: auto;
+  position: relative;
 }
 
 .container-footer p {
@@ -765,6 +766,14 @@ body {
 
 .main-container-keranjang {
   margin-top: 50px;
+  color: black;
+  margin-bottom: 125px;
+}
+
+.main-container-invoice {
+  margin-top: 50px;
+  color: black;
+  margin-bottom: 15px;
 }
 
 .container-invoice {
@@ -774,15 +783,17 @@ body {
   display: flex;
   position: relative;
   border-bottom: 1px solid rgb(161, 161, 161);
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-radius: 5px;
   align-items: left;
   justify-content: right;
+  margin-bottom: 15px;
 }
 
-.container-invoice h3 {
+.container-invoice h3,
+h2 {
   width: fit-content;
   font-size: 20px;
+  color: #000;
 }
 
 .checkout {
@@ -830,8 +841,97 @@ body {
   padding: 5px;
 }
 
+.shipping-container {
+  position: absolute;
+  top: 15%;
+  right: 5%;
+  display: inline-block;
+  z-index: 2;
+}
+
+.select-wrapper {
+  position: relative;
+  width: 260px;
+  justify-content: center;
+}
+
+.selected-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  border-radius: 8px;
+  background-color: #ff2171;
+  color: white;
+  height: 50px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.selected-option i {
+  position: absolute;
+  right: 25px;
+}
+.selected-option:hover {
+  background-color: #d3185c;
+}
+
+.options {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  max-height: 200px;
+  overflow-y: auto;
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.option {
+  padding: 10px;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin-left: 15px;
+}
+
+.option > p {
+  margin: 5px;
+  margin: auto;
+}
+
+.option:hover {
+  background-color: #ffe4a7;
+}
+
+.options::-webkit-scrollbar {
+  width: 0.5em;
+}
+
+.options::-webkit-scrollbar-thumb {
+  background-color: #888;
+}
+
+.options::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}
+
+.options::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.show {
+  display: block;
+}
+
 .label-container {
   margin-left: 25px;
+  position: relative;
+  z-index: 1;
 }
 
 .button-container {
@@ -849,6 +949,111 @@ body {
   cursor: pointer;
   font-size: 14px;
   font-weight: bold;
+}
+
+.tombol-invoice {
+  padding: 10px 20px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: #000;
+}
+
+.pembayaran {
+  padding: 10px 20px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  margin: auto;
+  margin-left: 20px;
+}
+
+.pembayaran h3 {
+  text-align: center;
+  font-size: 20px;
+}
+
+.pembayaran input[type="radio"] {
+  display: none;
+}
+
+.pembayaran img {
+  width: 7%;
+  height: auto;
+  margin-right: 10px;
+  flex-shrink: 0;
+  aspect-ratio: 3/2;
+  object-fit: contain;
+}
+
+.pembayaran label {
+  color: black;
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.pembayaran label:before {
+  content: "";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2px solid #ff2171;
+  margin-right: 10px;
+  background-color: #fff;
+}
+
+.pembayaran input[type="radio"]:checked + label:before {
+  background-color: #ff2171;
+}
+
+.pembayaran input[type="radio"]:focus + label:before {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+}
+
+.rincian {
+  padding: 10px 20px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  text-align: left;
+  background-color: white;
+  border-radius: 8px;
+}
+
+.rincian-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.rincian-button button {
+  border-radius: 10px;
+  background-color: #ff2171;
+  color: #ffe4a7;
+  padding: 10px 15px;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  width: 150px;
 }
 
 /* CSS untuk modal form */

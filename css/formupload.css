@@ -1,205 +1,112 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap");
-
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "poppins", sans-serif;
+/* Gaya umum */
+body {
+  background-color: #ff2171;
 }
 
 .formupload {
+  margin: auto;
+  padding: 0;
+  background-color: white;
+  border: none; /* Menghilangkan border */
+  width: 800px;
+  height: 100vh; /* Menggunakan viewport height untuk mengisi tinggi seluruh halaman */
+  box-sizing: border-box;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  width: 100%;
-  background: rgb(2, 0, 36);
-  background: linear-gradient(
-    145deg,
-    rgba(2, 0, 36, 1) 0%,
-    rgba(8, 96, 96, 1) 100%
-  );
-  background-position: center;
-  background-size: cover;
-}
-
-.form-box {
-  position: relative;
-  width: 600px;
-  height: 100%;
-  background: transparent;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  border-radius: 20px;
-  backdrop-filter: blur(15px);
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
 }
 
 .formupload h2 {
-  font-size: 2em;
-  color: #fff;
-  text-align: center;
-  margin-top: -100px;
+  font-size: 24px;
   margin-bottom: 20px;
 }
 
-.inputbox {
-  position: relative;
-  margin: 30px 0;
-  width: 310px;
-  border-bottom: 2px solid #fff;
+.formupload .form-box {
+  max-width: 500px;
+  margin: 0 auto;
 }
 
-.inputbox label {
+/* Gaya input box */
+.formupload .inputbox {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.formupload ion-icon {
   position: absolute;
   top: 50%;
-  left: 5px;
+  left: 10px;
   transform: translateY(-50%);
-  color: #fff;
-  font-size: 1em;
-  pointer-events: none;
-  transition: 0.5s;
+  font-size: 18px;
+  color: #888;
 }
 
-.formupload .inputbox input:focus ~ label,
-.formupload .inputbox input:valid ~ label {
-  top: -5px;
-}
-
-.inputbox input {
+.formupload input[type="text"],
+.formupload input[type="file"],
+.formupload textarea {
   width: 100%;
-  height: 50px;
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 1em;
-  padding: 0 35px 0 5px;
-  color: #fff;
+  padding: 10px 35px 10px 30px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
 }
 
-.inputbox ion-icon {
-  position: absolute;
-  right: 8px;
-  color: #fff;
-  font-size: 1.2em;
-  top: 20px;
-}
-
-.forget {
-  margin: -15px 0 15px;
-  font-size: 0.9em;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-}
-
-.forget label input {
-  margin-right: 3px;
-}
-
-.forget label a {
-  color: #fff;
-  text-decoration: none;
-}
-
-.forget label a:hover {
-  text-decoration: underline;
-}
-
-button {
+.formupload select {
   width: 100%;
-  height: 40px;
-  border-radius: 40px;
-  background: #fff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.formupload select option {
+  padding: 5px;
+}
+
+select option {
+  padding: 5px;
+}
+
+.formupload textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.formupload label {
+  font-size: 16px;
+}
+
+/* Gaya tombol submit */
+.formupload button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  background-color: #4caf50;
+  color: #fff;
   border: none;
-  outline: none;
+  border-radius: 5px;
   cursor: pointer;
-  font-size: 1em;
-  font-weight: 600;
-  margin-bottom: 25px;
 }
 
-.register {
-  font-size: 0.9em;
-  color: #fff;
-  text-align: center;
-  margin: 25px 0 10px;
+.formupload button[type="submit"]:hover {
+  background-color: #45a049;
 }
 
-.register p a {
-  text-decoration: none;
-  color: #fff;
-  font-weight: 600;
+/* Responsif */
+@media (max-width: 768px) {
+  .formupload .form-box {
+    max-width: 100%;
+  }
+
+  .formupload input[type="text"],
+  .formupload input[type="file"],
+  .formupload textarea {
+    padding: 10px;
+  }
 }
 
-.register p a:hover {
-  text-decoration: underline;
-}
-
-/* Mengatur gaya input yang diisi otomatis */
-.formupload .inputbox input:-webkit-autofill {
-  -webkit-text-fill-color: #fff;
-  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
-  transition: background-color 5000s ease-in-out 0s;
-}
-
-/* Mengatur gaya input yang diisi otomatis pada focus */
-.formupload .inputbox input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #fff;
-}
-
-/* Mengatur gaya label saat input diisi atau autofill aktif */
-.formupload .inputbox input:focus ~ label,
-.formupload .inputbox input:valid ~ label,
-.formupload input:-webkit-autofill ~ label {
-  top: -5px;
-  font-size: 0.8em;
-}
-
-/* Mengatur gaya caret (penunjuk teks) pada input yang diisi otomatis */
-.formupload .inputbox input::-webkit-input-placeholder {
-  color: #fff;
-}
-
-/* Mengatur gaya ikon pada input yang diisi otomatis */
-.formupload .inputbox input:-webkit-autofill + .icon {
-  color: #fff;
-}
-
-.inputbox textarea {
-  width: 100%;
-  height: 200px;
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 1em;
-  padding: 0 35px 0 5px;
-  color: #fff;
-  resize: none;
-}
-
-.inputbox textarea::-webkit-input-placeholder {
-  color: #fff;
-}
-
-.inputbox ion-icon {
-  position: absolute;
-  right: 8px;
-  color: #fff;
-  font-size: 1.2em;
-  top: 20px;
-}
-
-.formupload .inputbox textarea:focus ~ label,
-.formupload .inputbox textarea:valid ~ label {
-  top: -5px;
-  font-size: 0.8em;
-}
-
-/* */
+/* navbar */
 
 .nav {
   position: fixed;

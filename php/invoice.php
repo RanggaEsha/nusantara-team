@@ -14,6 +14,8 @@ if (isset($_GET['total'])) {
 <html>
 <head>
 
+  
+
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
       <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;display=swap" rel="stylesheet">
@@ -30,6 +32,11 @@ if (isset($_GET['total'])) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Fontawesome Link for Icons -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+
+      <!--IONICON-->
+      <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+
+
       <script src="../js/script.js" defer></script>
       
       <script src="../js/script3.js" defer></script>
@@ -134,33 +141,50 @@ if (isset($_GET['total'])) {
 
 
     
-<div class="main-container-keranjang">
-        <div class="checkout">
+<div class="main-container-invoice">
+           <div class="checkout">
             <h3>Checkout</h3>
-        </div>
-        <div class="checkout">
-            <h2>Alamat</h2>
-        </div>
-       
+            </div>
+           <div class="checkout">
+            <h2>Alamat </h2>
+           </div>
 
-        
+    <div class="alamat-invoice">
 
-<div class="alamat-invoice">
+      <div class="shipping-container">
 
-  <div class="label-container">
-    <label for="nama">Nama:</label>
-    <span id="namaLabel"></span>
-  </div>
-  <div class="label-container">
-    <label for="email">Email:</label>
-    <span id="emailLabel"></span>
-  </div>
-  <div class="label-container">
-    <label for="alamat">Alamat:</label>
-    <span id="alamatLabel"></span>
-  </div>
+        <div class="shipping-options">
+          <div class="select-wrapper">
+            <div class="selected-option">Metode Pengiriman <i class="fa-solid fa-chevron-down"></i></div>
+              <div class="options">
+                <div class="option" data-value="" disabled selected hidden>Metode Pengiriman </div>
+                <div class="option" data-value="standard"><p>JNE <br> Pengiriman 2 - 4 Hari</p><p class="price">25000</p></div>
+                <hr>
+                <div class="option" data-value="express"><p>Si Cepat <br> Pengiriman 2 - 4 Hari</p><p class="price">22000</p></div>
+                <hr>
+                <div class="option" data-value="overnight"><p>J&T <br> Pengiriman 2 - 4 Hari</p><p class="price">19000</p></div>
+            </div>
+           </div>
+          </div>
+     </div>
+
+      <div class="label-container">
+        <label for="nama">Nama:</label>
+        <span id="namaLabel"></span>
+      </div>
+      <div class="label-container">
+        <label for="email">Email:</label>
+        <span id="emailLabel"></span>
+      </div>
+      <div class="label-container">
+        <label for="alamat">Alamat:</label>
+        <span id="alamatLabel"></span>
+      </div>
 
 </div>
+
+
+
 
 <div class="alamat-invoice">
     <div class="button-container">
@@ -219,9 +243,42 @@ if (isset($_GET['total'])) {
   </div>
 </div>
 
-  <div class="container-invoice">
-  <h2>Total Harga: Rp. <?php echo number_format($total, 0, ".", "."); ?></h2>
+<div class="container-invoice"> 
+  <div class="pembayaran">
+      <h2>Metode Pembayaran</h2>
+        <input type="radio" id="bca" name="metode" value="bca">
+        <label for="bca"><img src="../gambar/bca.png" alt="">BCA</label>
+        
+
+        <input type="radio" id="bri" name="metode" value="bri">
+        <label for="bri"><img src="../gambar/bri.png" alt="">BRI</label>
+
+        <input type="radio" id="dana" name="metode" value="dana">
+        <label for="dana"><img src="../gambar/dana.png" alt="">Dana</label>
+
+        <input type="radio" id="gopay" name="metode" value="gopay">
+        <label for="gopay"><img src="../gambar/gopay.png" alt="">Go-Pay</label>
+      </div>
   </div>
+
+  <div class="container-invoice">
+          <div class="rincian">
+          </div>
+          <div class="rincian">
+          </div>
+          <div class="rincian">
+          <h2>Total Harga: Rp. <?php echo number_format($total, 0, ".", "."); ?> <span id="totalHargaLabel"></span></h2>
+          </div>
+          <div class="rincian-button">
+          <button class="invoice" onclick="retrieveCheckoutData()">Checkout</button>
+          </div>
+  </div>
+
+  
+    
+ 
+
+  
   <!-- Add your checkout form or payment gateway integration here -->
 
   <script>
@@ -229,10 +286,14 @@ if (isset($_GET['total'])) {
 
     function openModal() {
       modal.style.display = "block";
+      var shippingContainer = document.querySelector(".shipping-container");
+      shippingContainer.style.zIndex = "1";
     }
 
     function closeModal() {
       modal.style.display = "none";
+      var shippingContainer = document.querySelector(".shipping-container");
+      shippingContainer.style.zIndex = "2";
     }
 
     function updateLabel(field) {
@@ -253,6 +314,94 @@ if (isset($_GET['total'])) {
     }
   </script>
 
+
+
+<script>
+  //FORMAT HARGA
+  // Mendapatkan semua elemen dengan kelas "price"
+  var priceElements = document.getElementsByClassName("price");
+
+  // Melakukan formatting harga pada setiap elemen
+  for (var i = 0; i < priceElements.length; i++) {
+    var priceElement = priceElements[i];
+    var priceText = priceElement.innerHTML;
+    var priceNumber = priceText.replace(/\s/g, "");
+    var priceFormatted = "Rp. " + priceNumber.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1.");
+    priceElement.innerHTML = priceFormatted;
+  }
+</script>
+
+
+<script>
+  //FUNGSI UNTUK PILIHAN PENGIRIMAN
+    document.addEventListener("DOMContentLoaded", function() {
+      const selectWrapper = document.querySelector(".select-wrapper");
+      const selectedOption = selectWrapper.querySelector(".selected-option");
+      const options = selectWrapper.querySelector(".options");
+
+      selectedOption.addEventListener("click", function() {
+        options.classList.toggle("show");
+      });
+
+      options.addEventListener("click", function(event) {
+        if (event.target.classList.contains("option")) {
+          const value = event.target.getAttribute("data-value");
+          selectedOption.textContent = event.target.firstChild.textContent.trim();
+          selectedOption.setAttribute("data-value", value);
+          options.classList.remove("show");
+          showShippingOptions(); // Panggil fungsi showShippingOptions() di sini jika diperlukan
+        }
+      });
+
+      document.addEventListener("click", function(event) {
+        if (!selectWrapper.contains(event.target)) {
+          options.classList.remove("show");
+        }
+      });
+    });
+
+    function showShippingOptions() {
+      // Fungsi showShippingOptions()
+      // Tambahkan implementasi fungsi di sini
+      // Dapat digunakan untuk memproses pilihan pengiriman
+    }
+</script>
+
+<!-- Button Checkout -->
+<script>
+  function updateLabel(field) {
+    const value = document.getElementById(field).value;
+    document.getElementById(`${field}Label`).textContent = value;
+  }
+
+  function openModal() {
+    document.getElementById("myModal").style.display = "block";
+  }
+
+  function closeModal() {
+    document.getElementById("myModal").style.display = "none";
+  }
+
+  function retrieveCheckoutData() {
+    const nama = document.getElementById("namaLabel").textContent.trim();
+    const email = document.getElementById("emailLabel").textContent.trim();
+    const alamat = document.getElementById("alamatLabel").textContent.trim();
+    const metodePengiriman = document.querySelector('.selected-option').textContent.trim();
+    const metodePembayaran = document.querySelector('input[name="metode"]:checked').value;
+    const totalHarga = <?php echo $total; ?>; // Replace with the actual total price variable
+
+    // Store the retrieved data in local storage
+    localStorage.setItem("nama", nama);
+    localStorage.setItem("email", email);
+    localStorage.setItem("alamat", alamat);
+    localStorage.setItem("metodePengiriman", metodePengiriman);
+    localStorage.setItem("metodePembayaran", metodePembayaran);
+    localStorage.setItem("totalHarga", totalHarga);
+
+    // Redirect to the other HTML file
+    window.location.href = "../tes.php";
+  }
+</script>
 
 </body>
 </html>
