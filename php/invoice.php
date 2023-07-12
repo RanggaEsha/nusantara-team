@@ -62,61 +62,53 @@ if (isset($_GET['total'])) {
       <ul class="navbar-nav mx-auto">
         <!-- Hapus menu Home, About, dan Services -->
       </ul>
-          <form class="d-flex navbar-form" action="./search.php" method="POST">
-               <div class="input-group">
-                  <input class="form-control form-control-lg" type="search" name="search_query" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-outline-light" type="submit" name="search_submit">Search</button>
-               </div>
-          </form>
+      <form class="d-flex navbar-form" action="./search.php" method="POST">
+        <div class="input-group">
+          <input class="form-control form-control-lg" type="search" name="search_query" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-light" type="submit" name="search_submit">Search</button>
+        </div>
+      </form>
       <!-- Float Login -->
-    <!-- Button trigger modal -->
-    <!-- Buton Daftar 
-    <a type="button" class="btn btn-secondary " href="./daftar.html">
-      Daftar
-    </a>
-  -->
-
-  <div class="d-flex align-items-center"> <!-- Tambahkan elemen div untuk mengelompokkan ikon dan tombol login -->
-  <a href="keranjang.php" class="text-decoration-none text-light">
-  <i class="fas fa-shopping-cart me-2"></i>
-</a> <!-- Tambahkan ikon keranjang di sini, ganti kelas ikon dengan yang sesuai -->
-    <button type="button" class="btn btn-login-color" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    
-    </button>
-    </div>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5 text-center mx-auto p-2 fs-2" style="width: 800px;" id="exampleModalLabel">Login</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div class="d-flex align-items-center"> <!-- Tambahkan elemen div untuk mengelompokkan ikon dan tombol login -->
+        <a href="keranjang.php" class="text-decoration-none text-light">
+          <i class="fas fa-shopping-cart me-2"></i>
+        </a> <!-- Tambahkan ikon keranjang di sini, ganti kelas ikon dengan yang sesuai -->
+        <button type="button" class="btn btn-login-color" data-bs-toggle="modal" data-bs-target="#exampleModal"></button>
       </div>
-      <div class="modal-body">
-          <form>
-              <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-              </div>
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
-              </div>
-              <div class="text-center">
+
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5 text-center mx-auto p-2 fs-2" style="width: 800px;" id="exampleModalLabel">Login</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="text-center">
                   <a>Belum punya akun? </a><a href="./daftar.html" class="text-primary fs-8">Daftar</a>
-              </div>
-            </form>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer text-center mx-auto">
+              <button type="button" class="btn btn-primary">Login</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer text-center mx-auto">
-        <button type="button" class="btn btn-primary">Login</button>
-      </div>
-    </div>
-  </div>
-</div>
     </div>
   </div>
 </nav>
+
 
 
 
@@ -142,55 +134,58 @@ if (isset($_GET['total'])) {
 
     
 <div class="main-container-invoice">
-           <div class="checkout">
-            <h3>Checkout</h3>
-            </div>
-           <div class="checkout">
-            <h2>Alamat </h2>
-           </div>
-
-    <div class="alamat-invoice">
-
-      <div class="shipping-container">
-
-        <div class="shipping-options">
-          <div class="select-wrapper">
-            <div class="selected-option">Metode Pengiriman <i class="fa-solid fa-chevron-down"></i></div>
-              <div class="options">
-                <div class="option" data-value="" disabled selected hidden>Metode Pengiriman </div>
-                <div class="option" data-value="standard"><p>JNE <br> Pengiriman 2 - 4 Hari</p><p class="price">25000</p></div>
-                <hr>
-                <div class="option" data-value="express"><p>Si Cepat <br> Pengiriman 2 - 4 Hari</p><p class="price">22000</p></div>
-                <hr>
-                <div class="option" data-value="overnight"><p>J&T <br> Pengiriman 2 - 4 Hari</p><p class="price">19000</p></div>
-            </div>
-           </div>
-          </div>
-     </div>
-
-      <div class="label-container">
-        <label for="nama">Nama:</label>
-        <span id="namaLabel"></span>
-      </div>
-      <div class="label-container">
-        <label for="email">Email:</label>
-        <span id="emailLabel"></span>
-      </div>
-      <div class="label-container">
-        <label for="alamat">Alamat:</label>
-        <span id="alamatLabel"></span>
-      </div>
-
-</div>
-
-
-
-
-<div class="alamat-invoice">
-    <div class="button-container">
-    <button class="open-modal-button" onclick="openModal()">Masukkan Alamat</button>
+  <div class="checkout">
+    <h3>Checkout</h3>
   </div>
-</div>
+  <div class="checkout">
+    <h2>Alamat</h2>
+  </div>
+
+  <div class="alamat-invoice">
+    <div class="shipping-container">
+      <div class="shipping-options">
+        <div class="select-wrapper">
+          <div class="selected-option">Metode Pengiriman <i class="fa-solid fa-chevron-down"></i></div>
+          <div class="options">
+            <div class="option" disabled selected hidden>Metode Pengiriman</div>
+            <div class="option" onclick="updateShippingMethod(this)">
+              <p>JNE <br> Pengiriman 2 - 4 Hari</p>
+              <p class="price">25000</p>
+            </div>
+            <hr>
+            <div class="option" onclick="updateShippingMethod(this)">
+              <p>Si Cepat <br> Pengiriman 2 - 4 Hari</p>
+              <p class="price">22000</p>
+            </div>
+            <hr>
+            <div class="option" onclick="updateShippingMethod(this)">
+              <p>J&T <br> Pengiriman 2 - 4 Hari</p>
+              <p class="price">19000</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="label-container">
+      <label for="nama">Nama:</label>
+      <span id="namaLabel"></span>
+    </div>
+    <div class="label-container">
+      <label for="phone">No HP:</label>
+      <span id="phoneLabel"></span>
+    </div>
+    <div class="label-container">
+      <label for="alamat">Alamat:</label>
+      <span id="alamatLabel"></span>
+    </div>
+  </div>
+
+  <div class="alamat-invoice">
+    <div class="button-container">
+      <button class="open-modal-button" onclick="openModal()">Masukkan Alamat</button>
+    </div>
+  </div>
 
   <div id="myModal" class="modal-alamat">
     <div class="modal-content-alamat">
@@ -198,17 +193,26 @@ if (isset($_GET['total'])) {
       <form>
         <label for="nama">Nama:</label>
         <input type="text" id="nama" name="nama" oninput="updateLabel('nama')" /><br><br>
-    
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" oninput="updateLabel('email')" /><br><br>
-    
+
+        <label for="email">No Hp:</label>
+        <input type="email" id="phone" name="phone" oninput="updateLabel('phone')" /><br><br>
+
         <label for="pesan">Alamat:</label>
         <input type="text" id="alamat" name="alamat" oninput="updateLabel('alamat')"></textarea><br><br>
-    
+
         <button type="button" onclick="closeModal()">Tutup</button>
       </form>
     </div>
   </div>
+</div>
+<!-- End of main-container-invoice -->
+
+<!-- Closing div for alamat-invoice -->
+</div>
+
+<!-- Closing div for main-container-invoice -->
+</div>
+
 
 
   <div class="isi">
@@ -244,21 +248,23 @@ if (isset($_GET['total'])) {
 </div>
 
 <div class="container-invoice"> 
-  <div class="pembayaran">
-      <h2>Metode Pembayaran</h2>
-        <input type="radio" id="bca" name="metode" value="bca">
-        <label for="bca"><img src="../gambar/bca.png" alt="">BCA</label>
-        
+<div class="pembayaran">
+  <h2>Metode Pembayaran</h2>
 
-        <input type="radio" id="bri" name="metode" value="bri">
-        <label for="bri"><img src="../gambar/bri.png" alt="">BRI</label>
+  <input type="radio" id="bca" name="metode" value="bca" onchange="updatePaymentMethod(this)">
+  <label for="bca"><img src="../gambar/bca.png" alt="">BCA</label>
 
-        <input type="radio" id="dana" name="metode" value="dana">
-        <label for="dana"><img src="../gambar/dana.png" alt="">Dana</label>
+  <input type="radio" id="bri" name="metode" value="bri" onchange="updatePaymentMethod(this)">
+  <label for="bri"><img src="../gambar/bri.png" alt="">BRI</label>
 
-        <input type="radio" id="gopay" name="metode" value="gopay">
-        <label for="gopay"><img src="../gambar/gopay.png" alt="">Go-Pay</label>
-      </div>
+  <input type="radio" id="dana" name="metode" value="dana" onchange="updatePaymentMethod(this)">
+  <label for="dana"><img src="../gambar/dana.png" alt="">Dana</label>
+
+  <input type="radio" id="gopay" name="metode" value="gopay" onchange="updatePaymentMethod(this)">
+  <label for="gopay"><img src="../gambar/gopay.png" alt="">Go-Pay</label>
+</div>
+
+
   </div>
 
   <div class="container-invoice">
@@ -269,16 +275,57 @@ if (isset($_GET['total'])) {
           <div class="rincian">
           <h2>Total Harga: Rp. <?php echo number_format($total, 0, ".", "."); ?> <span id="totalHargaLabel"></span></h2>
           </div>
-          <div class="rincian-button">
-          <button class="invoice" onclick="retrieveCheckoutData()">Checkout</button>
-          </div>
+            <form action="fiturinvoice.php" method="post">
+              <div class="rincian-button">
+                  <input type="hidden" id="selectedShippingMethod" name="metode_pengiriman">
+                  <input type="hidden" id="selectedPaymentMethod" name="metode_pembayaran">
+                  <input type="hidden" id="namaInput" name="nama">
+                  <input type="hidden" id="alamatInput" name="alamat">
+                  <input type="hidden" id="phoneInput" name="phone">
+                  <input type="hidden" id="totalHargaInput" name="total_harga">
+                  <button type="submit" class="invoice">Checkout</button>
+              </div>
+            </form>
+
   </div>
 
   
-    
- 
+    <script>
+      // Mendapatkan elemen h2
+      var h2Element = document.querySelector(".rincian h2");
 
-  
+      // Mendapatkan nilai dari h2
+      var nilaiH2 = h2Element.innerText;
+
+      // Menghapus "Total Harga: Rp." dari nilai h2
+      var totalHarga = nilaiH2.replace("Total Harga: Rp. ", "");
+
+      // Mendapatkan elemen totalHargaInput
+      var totalHargaInputElement = document.getElementById("totalHargaInput");
+
+      // Mengatur nilai totalHargaInput dengan nilai totalHarga
+      totalHargaInputElement.value = totalHarga;
+
+    </script>
+ 
+<!-- metode pengiriman -->
+<script>
+  function updateShippingMethod(option) {
+    var selectedText = option.textContent;
+    var selectedShippingMethodInput = document.getElementById("selectedShippingMethod");
+    selectedShippingMethodInput.value = selectedText;
+  }
+</script>
+
+  <!-- RADIO -->
+  <script>
+  function updatePaymentMethod(radioButton) {
+    var selectedMethod = radioButton.value;
+    var selectedPaymentMethodInput = document.getElementById("selectedPaymentMethod");
+    selectedPaymentMethodInput.value = selectedMethod;
+  }
+</script>
+
   <!-- Add your checkout form or payment gateway integration here -->
 
   <script>
@@ -300,6 +347,9 @@ if (isset($_GET['total'])) {
       var value = document.getElementById(field).value;
       var label = document.getElementById(field + "Label");
       label.innerHTML = value;
+        // Menambahkan kode untuk mengisi input value
+      var input = document.getElementById(field + "Input");
+      input.value = value;
     }
 
     function tombolClicked() {
@@ -369,18 +419,7 @@ if (isset($_GET['total'])) {
 
 <!-- Button Checkout -->
 <script>
-  function updateLabel(field) {
-    const value = document.getElementById(field).value;
-    document.getElementById(`${field}Label`).textContent = value;
-  }
-
-  function openModal() {
-    document.getElementById("myModal").style.display = "block";
-  }
-
-  function closeModal() {
-    document.getElementById("myModal").style.display = "none";
-  }
+  
 
   function retrieveCheckoutData() {
     const nama = document.getElementById("namaLabel").textContent.trim();

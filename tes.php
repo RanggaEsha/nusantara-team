@@ -1,57 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
+<?php
+// Mengambil data terbaru dari database (sesuaikan dengan kebutuhan Anda)
+include './php/koneksi.php';
 
-    <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
+// Memeriksa koneksi
+if ($koneksi->connect_error) {
+    die("Koneksi ke database gagal: " . $koneksi->connect_error);
+}
+
+// Menyiapkan kueri SELECT dengan mengurutkan berdasarkan ID secara menurun (terbaru) dan membatasi hasil hanya 1 baris
+$sql = "SELECT * FROM invoice ORDER BY id DESC LIMIT 1";
+
+// Menjalankan kueri SELECT
+$result = $koneksi->query($sql);
+
+// Memeriksa apakah ada data yang ditemukan
+if ($result->num_rows > 0) {
+    // Menampilkan data
+    while ($row = $result->fetch_assoc()) {
+        echo "Nama: " . $row['nama'] . "<br>";
+        echo "Alamat: " . $row['alamat'] . "<br>";
+        echo "Phone: " . $row['phone'] . "<br>";
+        echo "Metode Pengiriman: " . $row['metode_pengiriman'] . "<br>";
+        echo "Metode Pembayaran: " . $row['metode_pembayaran'] . "<br>";
+        echo "Total Harga: " . $row['total_harga'] . "<br>";
+        echo "<br>";
     }
+} else {
+    echo "Tidak ada data yang ditemukan.";
+}
 
-    h1 {
-      color: #333;
-    }
-
-    p {
-      margin-bottom: 10px;
-    }
-
-    span {
-      font-weight: bold;
-    }
-  </style>
-
-  <title>Other HTML</title>
-</head>
-<body>
-  <h1>Checkout Details</h1>
-  <p>Nama: <span id="namaDetailLabel"></span></p>
-  <p>Email: <span id="emailDetailLabel"></span></p>
-  <p>Alamat: <span id="alamatDetailLabel"></span></p>
-  <p>Metode Pengiriman: <span id="metodePengirimanLabel"></span></p>
-  <p>Metode Pembayaran: <span id="metodePembayaranLabel"></span></p>
-  <p>Total Harga: Rp. <span id="totalHargaLabel"></span></p>
-
-  <script>
-    // Retrieve the data from local storage
-    const nama = localStorage.getItem("nama");
-    const email = localStorage.getItem("email");
-    const alamat = localStorage.getItem("alamat");
-    const metodePengiriman = localStorage.getItem("metodePengiriman");
-    const metodePembayaran = localStorage.getItem("metodePembayaran");
-    const totalHarga = localStorage.getItem("totalHarga");
-
-    // Update the HTML elements with the retrieved data
-    document.getElementById("namaDetailLabel").textContent = nama;
-    document.getElementById("emailDetailLabel").textContent = email;
-    document.getElementById("alamatDetailLabel").textContent = alamat;
-    document.getElementById("metodePengirimanLabel").textContent = metodePengiriman;
-    document.getElementById("metodePembayaranLabel").textContent = metodePembayaran;
-    document.getElementById("totalHargaLabel").textContent = totalHarga;
-
-    // Clear the local storage
-    localStorage.clear();
-  </script>
-</body>
-</html>
+// Menutup koneksi ke database
+$koneksi->close();
+?>

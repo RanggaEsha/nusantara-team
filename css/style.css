@@ -356,7 +356,7 @@ body {
 .container-best .carouselcard2 .card2 .img {
   height: 200px;
   width: 200px;
-  margin-left: 50px;
+  margin: auto;
 }
 
 .container-best .card2 .img img {
@@ -372,6 +372,7 @@ body {
   font-size: 15px;
   margin: 30px 0 5px;
   text-align: center;
+  margin: auto;
 }
 
 .container-best .carouselcard2 .card2 p {
@@ -889,6 +890,7 @@ h2 {
   overflow-y: auto;
   border-radius: 8px;
   font-size: 12px;
+  z-index: 2;
 }
 
 .option {
@@ -897,6 +899,7 @@ h2 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   margin-left: 15px;
+  z-index: 2;
 }
 
 .option > p {
@@ -1145,4 +1148,52 @@ h2 {
   padding-bottom: 10px;
   font-size: 15px;
   color: #000;
+}
+
+/* INVOICE AKHIR */
+
+.last-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  padding: 10x;
+  font-family: Arial, sans-serif;
+  flex-direction: column;
+  color: #000;
+  margin-top: -200px;
+}
+
+.second-last-container {
+  max-width: 600px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.second-last-container h1 {
+  margin-bottom: 20px;
+}
+
+.second-last-container .invoice-info {
+  margin-bottom: 20px;
+}
+
+.second-last-container .invoice-info strong {
+  font-weight: bold;
+  width: 120px; /* Tambahkan lebar tetap */
+  display: inline-block; /* Tambahkan properti ini untuk memungkinkan lebar tetap bekerja */
+}
+
+.second-last-container .invoice-info p {
+  margin: 0;
+}
+
+.second-last-container .error-message {
+  color: red;
 }
