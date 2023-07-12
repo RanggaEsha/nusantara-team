@@ -5,10 +5,10 @@ include 'koneksi.php';
 if (isset($_POST['submit'])) {
     $target_dir_promo = "../Daftarbuku/Promo/";
     $target_dir_bestseller = "../Daftarbuku/Bestseller/";
-    
+
     $target_file_promo = $target_dir_promo . basename($_FILES["fileToUpload"]["name"]);
     $target_file_bestseller = $target_dir_bestseller . basename($_FILES["fileToUpload"]["name"]);
-    
+
     $uploadOk = 1;
     $imageFileType = strtolower(pathinfo($target_file_promo, PATHINFO_EXTENSION));
 
@@ -45,15 +45,15 @@ if (isset($_POST['submit'])) {
             $author = $_POST['author'];
             $price = $_POST['price'];
             $desc = $_POST['deskripsi'];
+            $kategori = $_POST['kategori']; // Menambahkan kategori
 
             // Assuming you have already established a database connection
-            
 
             // Create a new PDO instance
             $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
             // Prepare the SQL statement
-            $stmt = $pdo->prepare("INSERT INTO buku_promo (judul, author, price, image, deskripsi) VALUES (:title, :author, :price, :image, :deskripsi)");
+            $stmt = $pdo->prepare("INSERT INTO buku_promo (judul, author, price, image, kategori ,deskripsi) VALUES (:title, :author, :price, :image, :kategori ,:deskripsi)");
 
             // Bind the parameters
             $stmt->bindParam(':title', $title);
@@ -61,6 +61,7 @@ if (isset($_POST['submit'])) {
             $stmt->bindParam(':price', $price);
             $stmt->bindParam(':deskripsi', $desc);
             $stmt->bindParam(':image', $target_file_promo);
+            $stmt->bindParam(':kategori', $kategori); // Menambahkan kategori
 
             // Execute the prepared statement
             if ($stmt->execute()) {
@@ -114,15 +115,15 @@ if (isset($_POST['submit_bestseller'])) {
             $author = $_POST['author_bestseller'];
             $price = $_POST['price_bestseller'];
             $deskripsi = $_POST['deskripsi_bestseller'];
+            $kategori = $_POST['kategori_bestseller']; // Menambahkan kategori
 
             // Assuming you have already established a database connection
-         
 
             // Create a new PDO instance
             $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
 
             // Prepare the SQL statement
-            $stmt = $pdo->prepare("INSERT INTO books (title, author, price, image, deskripsi) VALUES (:title, :author, :price, :image, :deskripsi)");
+            $stmt = $pdo->prepare("INSERT INTO books (title, author, price, image,kategori, deskripsi) VALUES (:title, :author, :price, :image,:kategori, :deskripsi)");
 
             // Bind the parameters
             $stmt->bindParam(':title', $title);
@@ -130,6 +131,7 @@ if (isset($_POST['submit_bestseller'])) {
             $stmt->bindParam(':price', $price);
             $stmt->bindParam(':image', $target_file_bestseller);
             $stmt->bindParam(':deskripsi', $deskripsi);
+            $stmt->bindParam(':kategori', $kategori); // Menambahkan kategori
 
             // Execute the prepared statement
             if ($stmt->execute()) {

@@ -111,18 +111,21 @@ if(isset($_POST['submit'])){
       <form action="feature.php" method="post" enctype="multipart/form-data">
         <div class="inputbox">
           <ion-icon name="mail-outline"></ion-icon>
-          <input type="text" name="title" id="title" required><br><br>
           <label for="title">Judul:</label>
+          <input type="text" name="title" id="title" required><br><br>
+          
         </div>
         <div class="inputbox">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="text" name="author" id="author" required><br><br>
           <label for="author">Penulis:</label>
+          <input type="text" name="author" id="author" required><br><br>
+          
         </div>
         <div class="inputbox">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="text" name="price" id="price" required pattern="[0-9]+" title="Harga harus berupa angka"><br><br>
           <label for="price"><i class="fa-solid fa-rupiah-sign"></i>Harga:</label>
+          <input type="text" name="price" id="price" required pattern="[0-9]+" title="Harga harus berupa angka"><br><br>
+          
         </div>
         <div class="inputbox">
           <ion-icon name="lock-closed-outline"></ion-icon>
@@ -130,14 +133,23 @@ if(isset($_POST['submit'])){
         </div>
         <div class="inputbox">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <textarea name="deskripsi" id="deskripsi" required maxlength="20000"></textarea><br><br>
           <label for="deskripsi">Deskripsi:</label>
+          <textarea name="deskripsi" id="deskripsi" required maxlength="20000"></textarea><br><br>
+          
         </div>
         <div class="inputbox">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="text" name="kategori" id="kategori" required><br><br>
           <label for="kategori">Kategori:</label>
-        </div>
+          <select name="kategori" id="kategori" required>
+            <option value="">Pilih kategori</option>
+            <option value="kategori1">Komedi</option>
+            <option value="kategori2">Religi</option>
+            <option value="kategori3">Fantasy</option>
+            <option value="kategori3">Action</option>
+            <!-- Tambahkan opsi lain sesuai kebutuhan -->
+          </select>
+      </div>
+
         <button type="submit" value="Upload" name="submit">Submit Promo</button>
       </form>
     </div>
@@ -153,33 +165,47 @@ if(isset($_POST['submit'])){
       <form action="feature.php" method="POST" enctype="multipart/form-data">
         <div class="inputbox">
           <ion-icon name="mail-outline"></ion-icon>
-          <input type="text" name="title_bestseller" id="title" required><br><br>
           <label for="title">Judul:</label>
+          <input type="text" name="title_bestseller" id="title" required><br><br>
+          
         </div>
         <div class="inputbox">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="text" name="author_bestseller" id="author" required><br><br>
           <label for="author">Penulis:</label>
+          <input type="text" name="author_bestseller" id="author" required><br><br>
+         
         </div>
         <div class="inputbox">
           <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="text" name="price_bestseller" id="price" required pattern="[0-9]+" title="Harga harus berupa angka"><br><br>
           <label for="price">Harga:</label>
-        </div>
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="text" name="kategori_bestseller" id="kategori" required><br><br>
-          <label for="kategori">Kategori:</label>
-        </div>
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <textarea name="deskripsi_bestseller" id="deskripsi" required maxlength="20000"></textarea><br><br>
-          <label for="deskripsi">Deskripsi:</label>
-        </div>
-        <div class="inputbox">
+          <input type="text" name="price_bestseller" id="price" required pattern="[0-9]+" title="Harga harus berupa angka"><br><br>
+          
+          <div class="inputbox">
           <ion-icon name="lock-closed-outline"></ion-icon>
           <input type="file" name="fileToUpload_bestseller" id="fileToUpload_bestseller" required><br><br>
         </div>
+
+        <div class="inputbox">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+           <label for="deskripsi">Deskripsi:</label>
+          <textarea name="deskripsi_bestseller" id="deskripsi" required maxlength="20000"></textarea><br><br>
+         
+        </div>
+
+        <div class="inputbox">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <label for="kategori">Kategori:</label>
+          <select name="kategori_bestseller" id="kategori" required>
+            <option value="">Pilih kategori</option>
+            <option value="kategori1">Komedi</option>
+            <option value="kategori2">Religi</option>
+            <option value="kategori3">Fantasy</option>
+            <option value="kategori3">Action</option>
+            <!-- Tambahkan opsi lain sesuai kebutuhan -->
+          </select>
+      </div>
+        
+        
         <button type="submit" value="Upload" name="submit_bestseller">Submit Bestseller</button>
       </form>
     </div>
