@@ -112,66 +112,7 @@
 <!---------------- AKHIR NAVBAR ATAS ------------------>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg nv-color justify-content-end">
-  <div class="container">
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0 mx-auto">
-        <li class="nav-item dropdown mx-2">
-          <a class="nav-link active dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">Kategori</a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Novel</a></li>
-            <li><a class="dropdown-item" href="#">Komedi</a></li>
-            <li><a class="dropdown-item" href="#">Religi</a></li>
-          </ul>
-        </li>
-        <li class="nav-item mx-2">
-          <a class="nav-link" href="#">Pre Order</a>
-        </li>
-        <li class="nav-item mx-2">
-          <a class="nav-link" href="#">Whistlist</a>
-        </li>
-        <li class="nav-item dropdown mx-2">
-          <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            About
-          </a>
-        </li>
-      </ul>
-
-      <!-- Float Login -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h1 class="modal-title fs-5 text-center mx-auto p-2 fs-2" style="width: 800px;" id="exampleModalLabel">Login</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              <form>
-                <div class="mb-3">
-                  <label for="exampleInputEmail1" class="form-label">Email address</label>
-                  <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                  <label for="exampleInputPassword1" class="form-label">Password</label>
-                  <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
-                <div class="text-center">
-                  <a>Belum punya akun? </a><a href="../php/daftar.php" class="text-primary fs-8">Daftar</a>
-                </div>
-              </form>
-            </div>
-            <div class="modal-footer text-center mx-auto">
-              <button type="button" class="btn btn-primary">Login</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</nav>
+  
 
     <!-- Navrbar -->
 
