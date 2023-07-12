@@ -22,8 +22,7 @@
                     </div>
                     <button>Login</button>
                     <div class="register">
-                        <p>Belum punya ada akun? <a href="daftar.php">Daftar</a></p>
-                        <p>tes</p>
+                        <p>Belum punya ada akun? Kasihan <a href="daftar.php">Daftar</a></p>
                     </div>
                 </form>
             </div>
