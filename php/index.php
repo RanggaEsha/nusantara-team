@@ -284,7 +284,7 @@
       <?php foreach ($bukupromo as $bookpromo): ?>
     <li class="card2">
         <div class="img">
-            <a class="link" href="./halamanbukupromo/detail_buku_<?php echo basename($bookpromo['image']. '_' .$bookpromo['id']); ?>.php"><img src="../<?php echo $bookpromo['image']; ?>" alt="Book Image"></a>
+            <a class="link" href="../halamanbukupromo/detail_buku_<?php echo basename($bookpromo['image']. '_' .$bookpromo['id']); ?>.php"><img src="../<?php echo $bookpromo['image']; ?>" alt="Book Image"></a>
         </div>
         <h2><?php echo $bookpromo['judul']; ?></h2>
         <p><?php echo $bookpromo['author']; ?></p>
@@ -337,49 +337,13 @@
                               <?php foreach ($bukubest as $bookbest): ?>
                                 <li class="card2">
                                   <div class="img">
-                                    <a class="link" href="./halamanbukubest/detail_buku_<?php echo basename($bookbest['image']. '_' .$bookbest['id']); ?>.php"><img src="../<?php echo $bookbest['image']; ?>" alt="Book Image"></a>
+                                    <a class="link" href="../halamanbukubest/detail_buku_<?php echo basename($bookbest['image']. '_' .$bookbest['id']); ?>.php"><img src="../<?php echo $bookbest['image']; ?>" alt="Book Image"></a>
                                   </div>
                                 <h2><?php echo $bookbest['title']; ?></h2>
                                 <p><?php echo $bookbest['author']; ?></p>
                                 <span>Rp. <?php echo number_format($bookbest['price'], 0, ',', '.'); ?></span>
                               </li>
                             <?php endforeach; ?>
-
-              <li class="card2">
-                <div class="img"><img src="./Daftarbuku/1.jpg" alt="img" draggable="false"></div>
-                <h2>Blanche Pearson</h2>
-                <p>tes</p>
-                <span style="display: inline-block; text-align: center; width: 100%;">Sales Manager</span>
-
-              </li>
-              <li class="card2">
-                <div class="img"><img src="images/img-2.jpg" alt="img" draggable="false"></div>
-                <h2>Joenas Brauers</h2>
-                <p>tes</p>
-                <span>Web Developer</span>
-              </li>
-              <li class="card2">
-                <div class="img"><img src="images/img-3.jpg" alt="img" draggable="false"></div>
-                <h2>Lariach French</h2>
-                <p>tes</p>
-                <span>Online Teacher</span>
-              </li>
-              <li class="card2">
-                <div class="img"><img src="images/img-4.jpg" alt="img" draggable="false"></div>
-                <h2>James Khosravi</h2>
-                <p>tes</p>
-                <span>Freelancer</span>
-              </li>
-              <li class="card2">
-                <div class="img"><img src="images/img-5.jpg" alt="img" draggable="false"></div>
-                <h2>Kristina Zasiadko</h2>
-                <span>Bank Manager</span>
-              </li>
-              <li class="card2">
-                <div class="img"><img src="images/img-6.jpg" alt="img" draggable="false"></div>
-                <h2>Donald Horton</h2>
-                <span>App Designer</span>
-              </li>
           </ul>
        <i id="right" class="fa-solid fa-angle-right"></i>
   </div>

@@ -1,152 +1,99 @@
 <?php
-include 'koneksi.php';
-// Assuming you have already established a database connection
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["fileToUpload"])) {
+    include 'koneksi.php'; // Menggunakan koneksi dari koneksi.php
 
-if (isset($_POST['submit'])) {
-    $target_dir_promo = "../Daftarbuku/Promo/";
-    $target_dir_bestseller = "../Daftarbuku/Bestseller/";
+    // Handle file upload
+    $targetBaseDir = "../Daftarbuku/";
 
-    $target_file_promo = $target_dir_promo . basename($_FILES["fileToUpload"]["name"]);
-    $target_file_bestseller = $target_dir_bestseller . basename($_FILES["fileToUpload"]["name"]);
+    $tableChoice = $_POST["tableChoice"];
+    $subDir = "";
 
+    if ($tableChoice === "buku_best_seller") {
+        $subDir = "BestSeller/";
+    } else if ($tableChoice === "book_promo") {
+        $subDir = "Promo/";
+    }
+
+    $targetDir = $targetBaseDir . $subDir;
+
+    $targetFile = $targetDir . basename($_FILES["fileToUpload"]["name"]);
     $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file_promo, PATHINFO_EXTENSION));
+    $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
 
-    // Cek apakah file gambar
-    if (isset($_POST["submit"])) {
-        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        if ($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".";
-            $uploadOk = 1;
-        } else {
-            echo "File is not an image.";
-            $uploadOk = 0;
-        }
-    }
-
-    // Cek ukuran file
-    if ($_FILES["fileToUpload"]["size"] > 500000000) {
-        echo "Sorry, your file is too large.";
+    // Check if the uploaded file is an image
+    $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+    if ($check === false) {
+        echo "File yang diunggah bukan gambar.";
         $uploadOk = 0;
     }
 
-    // Cek ekstensi file yang diizinkan
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+    // Check if the file already exists
+    if (file_exists($targetFile)) {
+        echo "Maaf, file tersebut sudah ada.";
         $uploadOk = 0;
     }
 
-    // Cek jika $uploadOk bernilai 0 karena terdapat error
+    // Check file size
+    if ($_FILES["fileToUpload"]["size"] > 500000) { // Adjust the file size limit as needed
+        echo "Maaf, ukuran file terlalu besar.";
+        $uploadOk = 0;
+    }
+
+    // Allow only certain image file formats
+    if (
+        $imageFileType != "jpg" && $imageFileType != "jpeg" && $imageFileType != "png"
+        && $imageFileType != "gif"
+    ) {
+        echo "Maaf, hanya file gambar JPG, JPEG, PNG, dan GIF yang diperbolehkan.";
+        $uploadOk = 0;
+    }
+
+    // Handle form data for books
+    $title = $_POST["title"];
+    $author = $_POST["author"];
+    $price = $_POST["price"];
+    $kategory = $_POST["category"];
+    $description = $_POST["description"];
+
+    // Check if all required form fields are filled
+    if (empty($title) || empty($author) || empty($price) || empty($kategory) || empty($description)) {
+        echo "Harap isi semua field dengan benar.";
+        $uploadOk = 0;
+    }
+
+    // Check if file and form data are valid before proceeding
     if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
+        echo "Maaf, file Anda tidak dapat diunggah.";
     } else {
-        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file_promo)) {
-            $title = $_POST['title'];
-            $author = $_POST['author'];
-            $price = $_POST['price'];
-            $desc = $_POST['deskripsi'];
-            $kategori = $_POST['kategori']; // Menambahkan kategori
+        // If everything is valid, upload the file
+        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $targetFile)) {
+            // Insert data into the chosen table based on the user's selection
+            if ($tableChoice === "buku_best_seller") {
+                $sql_book = "INSERT INTO books (title, author, price, image, kategori, deskripsi) 
+             VALUES ('$title', '$author', '$price', '$targetFile', '$kategory', '$description')";
+                if ($koneksi->query($sql_book) === TRUE) {
+                    echo "File " . $title . " telah diunggah dan disimpan bersama data buku.";
+                } else {
+                    echo "Terjadi kesalahan saat menyimpan informasi file dan data buku: " . $koneksi->error;
+                }
+            } else if ($tableChoice === "book_promo") {
+                $sql_book_promo = "INSERT INTO buku_promo (judul, author, price, image, kategori, deskripsi) 
+             VALUES ('$title', '$author', '$price', '$targetFile', '$kategory', '$description')";
 
-            // Assuming you have already established a database connection
-
-            // Create a new PDO instance
-            $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-
-            // Prepare the SQL statement
-            $stmt = $pdo->prepare("INSERT INTO buku_promo (judul, author, price, image, kategori ,deskripsi) VALUES (:title, :author, :price, :image, :kategori ,:deskripsi)");
-
-            // Bind the parameters
-            $stmt->bindParam(':title', $title);
-            $stmt->bindParam(':author', $author);
-            $stmt->bindParam(':price', $price);
-            $stmt->bindParam(':deskripsi', $desc);
-            $stmt->bindParam(':image', $target_file_promo);
-            $stmt->bindParam(':kategori', $kategori); // Menambahkan kategori
-
-            // Execute the prepared statement
-            if ($stmt->execute()) {
-                // Menampilkan pop-up menggunakan JavaScript
-                echo '<script>alert("File Berhasil Di Upload.");</script>';
-            } else {
-                echo "Sorry, there was an error uploading your file to the database.";
+                if ($koneksi->query($sql_book_promo) === TRUE) {
+                    echo "File " . $author . " telah diunggah dan disimpan bersama data buku promo.";
+                } else {
+                    echo "Terjadi kesalahan saat menyimpan informasi file dan data buku promo: " . $koneksi->error;
+                }
             }
-        } else {
-            echo "Sorry, there was an error uploading your file.";
+
+            $koneksi->close();
+            
+            // Redirect to "buathalaman.php" after successful upload and data storage
+            echo "<script>window.location.href = 'buathalaman.php';</script>";
+            exit;
         }
     }
 }
-
-if (isset($_POST['submit_bestseller'])) {
-    $target_dir_bestseller = "../Daftarbuku/Bestseller/";
-    $target_file_bestseller = $target_dir_bestseller . basename($_FILES["fileToUpload_bestseller"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file_bestseller, PATHINFO_EXTENSION));
-
-    // Cek apakah file gambar
-    if (isset($_POST["submit_bestseller"])) {
-        $check = getimagesize($_FILES["fileToUpload_bestseller"]["tmp_name"]);
-        if ($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".";
-            $uploadOk = 1;
-        } else {
-            echo "File is not an image.";
-            $uploadOk = 0;
-        }
-    }
-
-    // Cek ukuran file
-    if ($_FILES["fileToUpload_bestseller"]["size"] > 500000000) {
-        echo "Sorry, your file is too large.";
-        $uploadOk = 0;
-    }
-
-    // Cek ekstensi file yang diizinkan
-    if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-        $uploadOk = 0;
-    }
-
-    // Cek jika $uploadOk bernilai 0 karena terdapat error
-    if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
-    } else {
-        if (move_uploaded_file($_FILES["fileToUpload_bestseller"]["tmp_name"], $target_file_bestseller)) {
-            $title = $_POST['title_bestseller'];
-            $author = $_POST['author_bestseller'];
-            $price = $_POST['price_bestseller'];
-            $deskripsi = $_POST['deskripsi_bestseller'];
-            $kategori = $_POST['kategori_bestseller']; // Menambahkan kategori
-
-            // Assuming you have already established a database connection
-
-            // Create a new PDO instance
-            $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-
-            // Prepare the SQL statement
-            $stmt = $pdo->prepare("INSERT INTO books (title, author, price, image,kategori, deskripsi) VALUES (:title, :author, :price, :image,:kategori, :deskripsi)");
-
-            // Bind the parameters
-            $stmt->bindParam(':title', $title);
-            $stmt->bindParam(':author', $author);
-            $stmt->bindParam(':price', $price);
-            $stmt->bindParam(':image', $target_file_bestseller);
-            $stmt->bindParam(':deskripsi', $deskripsi);
-            $stmt->bindParam(':kategori', $kategori); // Menambahkan kategori
-
-            // Execute the prepared statement
-            if ($stmt->execute()) {
-                // Menampilkan pop-up menggunakan JavaScript
-                echo '<script>alert("File Berhasil Di Upload.");</script>';
-            } else {
-                echo "Sorry, there was an error uploading your file to the database.";
-            }
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
-    }
-}
-
-// Redirect ke halaman lain setelah penghapusan berhasil
-echo "<script>window.location.href = 'buathalaman.php';</script>";
-exit;
 ?>
+

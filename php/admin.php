@@ -1,355 +1,418 @@
-<?php
-if(isset($_POST['submit'])){
-    $target_dir = "../Daftarbuku/promo";
-    $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-    $uploadOk = 1;
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-    // Cek apakah file gambar
-    if(isset($_POST["submit"])) {
-        $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-        if($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".";
-            $uploadOk = 1;
-        } else {
-            echo "File is not an image.";
-            $uploadOk = 0;
-        }
-    }
-
-    // Cek apakah file sudah ada
-    if (file_exists($target_file)) {
-        echo "Sorry, file already exists.";
-        $uploadOk = 0;
-    }
-
-    // Cek ukuran file
-    if ($_FILES["fileToUpload"]["size"] > 500000000) {
-        echo "Sorry, your file is too large.";
-        $uploadOk = 0;
-    }
-
-    // Cek ekstensi file yang diizinkan
-    if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-    && $imageFileType != "gif" ) {
-        echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
-        $uploadOk = 0;
-    }
-
-    // Cek jika $uploadOk bernilai 0 karena terdapat error
-    if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
-    // Jika semua kondisi terpenuhi, maka unggah file
-    } else {
-        if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-            $title = $_POST['title'];
-            $author = $_POST['author'];
-            $price = $_POST['price'];
-
-            // Tambahkan elemen <li> baru ke dalam <ul>
-            $new_card = '<li class="card2">
-                            <div class="img"><img src="'.$target_file.'" alt="img" draggable="false"></div>
-                            <h2>'.$title.'</h2>
-                            <p>'.$author.'</p>
-                            <span>'.$price.'</span>
-                        </li>';
-
-            $file_path = './index.php'; // Ubah sesuai dengan path file HTML Anda
-
-            $html_content = file_get_contents($file_path);
-            $position = strpos($html_content, '<ul class="carouselcard">') + strlen('<ul class="carouselcard">');
-            $new_content = substr_replace($html_content, $new_card, $position, 0);
-
-            file_put_contents($file_path, $new_content);
-
-            echo "The file ". htmlspecialchars(basename($_FILES["fileToUpload"]["name"])). " has been uploaded.";
-        } else {
-            echo "Sorry, there was an error uploading your file.";
-        }
-    }
-}
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
 
 <style>
-    
-</style>
+        /* Custom CSS */
+        body {
+            padding-top: 20px;
+        }
 
-  <link rel="stylesheet" href="../css/formupload.css">
-  <title>Upload File</title>
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+
+     /* CSS style untuk navigasi (sidebar) */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            z-index: 100;
+            padding-top: 3.5rem;
+            background-color: #f8f9fa;
+            display: flex; /* Menjadikan konten sidebar menjadi flex container */
+            flex-direction: column; /* Menjadikan konten sidebar menjadi flex column */
+            align-items: center; /* Mengatur konten agar berada di tengah-tengah secara horizontal */
+        }
+
+        .sidebar ul.nav {
+            padding: 0;
+            list-style: none;
+            margin: 0; /* Atur margin menjadi 0 untuk menghapus default margin dari ul */
+        }
+
+        .sidebar .nav-item {
+            margin-bottom: 1rem;
+        }
+
+        .sidebar .nav-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            color: #333;
+            text-decoration: none;
+            border-radius: 0.25rem;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .sidebar .nav-link.active,
+        .sidebar .nav-link:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .sidebar .nav-link[data-bs-toggle="modal"] {
+            cursor: pointer;
+        }
+
+        .sidebar .a {
+          text-align: center;
+        }
+
+      /* Custom CSS for the Unggah File modal */
+        .modal-content {
+            font-family: Arial, sans-serif;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+        }
+
+        #promoFields {
+            margin-top: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: center; /* Mengatur tombol menjadi di tengah secara horizontal */
+            gap: 10px;
+        }
+
+        .modal-footer .btn {
+            padding: 8px 50px; /* Mengatur lebar tombol */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem; /* Sesuaikan ukuran teks tombol jika diperlukan */
+            font-weight: bold; /* Sesuaikan gaya teks tombol jika diperlukan */
+            margin: auto;
+        }
+
+        .modal-content input[type="submit"] {
+          width: 100%;
+        }
+        
+
+        /* Styling the Hapus File button in the modal */
+        .modal-body button[type="submit"] {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+        }
+
+        .modal-body button[type="submit"]:hover {
+            background-color: #c82333;
+        }
+
+        /* Styling the Unggah File button in the modal */
+        .modal-body input[type="submit"] {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+        }
+
+
+        /* Styling the Daftar File list */
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Vertically align the delete button */
+        }
+
+        ul li form {
+            display: inline;
+            margin: 0;
+        }
+
+        ul li form button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        ul li form button:hover {
+            background-color: #c82333;
+        }
+
+      
+
+    </style>
+
+    <title>Halaman Admin</title>
+    <!-- Tambahkan link ke Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
 
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Navbar Kiri -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Beranda</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#uploadModal">Unggah File</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#deleteModal">Hapus File</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
 
+          <!-- Konten Utama -->
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <!-- Isi konten utama di sini -->
+    <h1>Selamat datang di halaman admin</h1>
+    <hr>
+    
 
-
-<!-- SideBar -->
-<nav class="nav">
-    <a class="index" href="index.php"><h3 href="index.php">Home</h3></a>
-    <ul>
-      <li><a href="#promo-section">Form Upload Buku Promo</a></li>
-      <li><a href="#bestseller-section">Form Upload Buku Best Seller</a></li>
-      <li><a href="#delete-section">Delete Product</a></li>
-      <li><a href="#bestseller-section">Form Upload Buku Best Seller</a></li>
-    </ul>
-  </nav>
-  
-  <div class="navbar-toggle">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="black">
-      <path d="M0 0h24v24H0z" fill="none"/>
-      <path d="M3 18h18v-2H3v2zM3 6v2h18V6H3zm0 7h18v-2H3v2z"/>
-    </svg>
-  </div>
-
-  <section class="formupload" id="promo-section">
-  <h2>Form Upload Buku Promo</h2>
-  <div class="form-box">
-    <div class="form-value">
-      <form action="feature.php" method="post" enctype="multipart/form-data">
-        <div class="inputbox">
-          <ion-icon name="mail-outline"></ion-icon>
-          <label for="title">Judul:</label>
-          <input type="text" name="title" id="title" required><br><br>
-          
-        </div>
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <label for="author">Penulis:</label>
-          <input type="text" name="author" id="author" required><br><br>
-          
-        </div>
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <label for="price"><i class="fa-solid fa-rupiah-sign"></i>Harga:</label>
-          <input type="text" name="price" id="price" required pattern="[0-9]+" title="Harga harus berupa angka"><br><br>
-          
-        </div>
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="file" name="fileToUpload" id="fileToUpload" required><br><br>
-        </div>
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <label for="deskripsi">Deskripsi:</label>
-          <textarea name="deskripsi" id="deskripsi" required maxlength="20000"></textarea><br><br>
-          
-        </div>
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <label for="kategori">Kategori:</label>
-          <select name="kategori" id="kategori" required>
-            <option value="">Pilih kategori</option>
-            <option value="kategori1">Komedi</option>
-            <option value="kategori2">Religi</option>
-            <option value="kategori3">Fantasy</option>
-            <option value="kategori3">Action</option>
-            <!-- Tambahkan opsi lain sesuai kebutuhan -->
-          </select>
-      </div>
-
-        <button type="submit" value="Upload" name="submit">Submit Promo</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!--------------------  Fitur Upload Buku Best Seller  ----------------------->
-
-<section class="formupload" id="bestseller-section">
-  <h2>Form Upload Buku Best Seller</h2>
-  <div class="form-box">
-    <div class="form-value">
-      <form action="feature.php" method="POST" enctype="multipart/form-data">
-        <div class="inputbox">
-          <ion-icon name="mail-outline"></ion-icon>
-          <label for="title">Judul:</label>
-          <input type="text" name="title_bestseller" id="title" required><br><br>
-          
-        </div>
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <label for="author">Penulis:</label>
-          <input type="text" name="author_bestseller" id="author" required><br><br>
-         
-        </div>
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <label for="price">Harga:</label>
-          <input type="text" name="price_bestseller" id="price" required pattern="[0-9]+" title="Harga harus berupa angka"><br><br>
-          
-          <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <input type="file" name="fileToUpload_bestseller" id="fileToUpload_bestseller" required><br><br>
-        </div>
-
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-           <label for="deskripsi">Deskripsi:</label>
-          <textarea name="deskripsi_bestseller" id="deskripsi" required maxlength="20000"></textarea><br><br>
-         
-        </div>
-
-        <div class="inputbox">
-          <ion-icon name="lock-closed-outline"></ion-icon>
-          <label for="kategori">Kategori:</label>
-          <select name="kategori_bestseller" id="kategori" required>
-            <option value="">Pilih kategori</option>
-            <option value="kategori1">Komedi</option>
-            <option value="kategori2">Religi</option>
-            <option value="kategori3">Fantasy</option>
-            <option value="kategori3">Action</option>
-            <!-- Tambahkan opsi lain sesuai kebutuhan -->
-          </select>
-      </div>
-        
-        
-        <button type="submit" value="Upload" name="submit_bestseller">Submit Bestseller</button>
-      </form>
-    </div>
-  </div>
-</section>
-
-
-
-<!--------------------  Akfir Fitur Upload Buku Best Seller  ----------------------->
-
-<!--------------------  FITUR DELETE  ----------------------->
-
-  <?php
-// Assuming you have already established a database connection
-
-// Function to delete a book from the database
-function deleteBook($bookId, $table)
-{
-    // Your deleteBook function code here
+    <h2>Daftar Buku Best Seller</h2>
+    <?php
     include 'koneksi.php';
 
-    // Create a new PDO instance
-    $pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    // Fetch books data
+    $sql_books = "SELECT * FROM books ORDER BY id";
+    $result_books = $koneksi->query($sql_books);
 
-    // Prepare the SQL statement to delete the book
-    $stmt = $pdo->prepare("DELETE FROM $table WHERE id = :bookId");
-    $stmt->bindParam(':bookId', $bookId);
-    $stmt->execute();
-
-    // Check if the deletion was successful
-    if ($stmt->rowCount() > 0) {
-        $response = array(
-            'status' => 'success',
-            'message' => 'Book deleted successfully.'
-        );
+    if ($result_books->num_rows > 0) {
+        echo "<table class='table'>";
+        echo "<thead><tr><th>Judul Buku</th><th>Penulis</th><th>Gambar</th><th>Kategori</th><th>Deskripsi</th><th>Aksi</th></tr></thead>";
+        echo "<tbody>";
+        while ($row_books = $result_books->fetch_assoc()) {
+            echo "<tr>
+                      <td>" . $row_books["title"] . "</td>
+                      <td>" . $row_books["author"] . "</td>
+                      <td><img src='" . $row_books["image"] . "' alt='Gambar Buku' style='max-width: 100px;'></td>
+                      <td>" . $row_books["kategori"] . "</td>
+                      <td>" . $row_books["deskripsi"] . "</td>
+                      <td>
+                          <form action='delete_book_best_seller.php' method='post' style='display: inline;'>
+                              <input type='hidden' name='id' value='" . $row_books["id"] . "'>
+                              <button type='submit' class='btn btn-danger' onclick='return confirm(\"Apakah Anda yakin ingin menghapus buku ini?\")'>Hapus</button>
+                          </form>
+                      </td>
+                  </tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
     } else {
-        $response = array(
-            'status' => 'error',
-            'message' => 'Failed to delete the book.'
-        );
+        echo "Belum ada buku yang diunggah.";
     }
 
-    return $response;
-}
+    $koneksi->close();
+    ?>
 
-// Fetch the book data from the database
-include '../php/koneksi.php';
+    <h2>Daftar Buku Promo</h2>
+    <?php
+    include 'koneksi.php';
 
-// Create a new PDO instance
-$pdo = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    // Fetch book_promo data
+    $sql_book_promo = "SELECT * FROM buku_promo ORDER BY id";
+    $result_book_promo = $koneksi->query($sql_book_promo);
 
-// Prepare the SQL statement to fetch books
-$stmtBooks = $pdo->prepare("SELECT * FROM books");
-$stmtBooks->execute();
-$books = $stmtBooks->fetchAll(PDO::FETCH_ASSOC);
-
-// Prepare the SQL statement to fetch promo books
-$stmtPromoBooks = $pdo->prepare("SELECT * FROM buku_promo");
-$stmtPromoBooks->execute();
-$promoBooks = $stmtPromoBooks->fetchAll(PDO::FETCH_ASSOC);
-
-// Handle delete book action
-if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
-    $bookId = $_GET['id'];
-    $table = $_GET['table']; // Assuming you have a 'table' parameter in the URL specifying the table name
-    $deleteResponse = deleteBook($bookId, $table);
-
-    // Convert the response to JSON and pass it to the JavaScript code
-    echo '<script>';
-    echo 'var deleteResponse = ' . json_encode($deleteResponse) . ';';
-    echo '</script>';
-}
-?>
-
-
-  <section class="delete" id="delete-section">
-    <h1>Buku Best Seller</h1>
-    <div class="book-container">
-        <?php foreach ($promoBooks as $book): ?>
-            <div class="book-card">
-                <img src="<?php echo $book['image']; ?>" alt="Book Image">
-               
-                <h2><?php echo $book['judul']; ?></h2>
-                <p><?php echo $book['author']; ?></p>
-                <span><?php echo $book['price']; ?></span>
-                <p>
-                    <a href="?action=delete&id=<?php echo $book['id']; ?>&table=buku_promo">Delete</a>
-                </p>
-            </div>
-        <?php endforeach; ?>
-    </div>
-</section>
-
-<section class="delete" id="bestseller-section">
-<h1 class="headerbook">Buku Best Seller</h1>
-    <div class="book-container">
-        <?php foreach ($books as $buku): ?>
-            <div class="book-card">
-                <img src="<?php echo $buku['image']; ?>" alt="Book Image">
-        
-                <h2><?php echo $buku['title']; ?></h2>
-                <p><?php echo $buku['author']; ?></p>
-                <span><?php echo $buku['price']; ?></span>
-                <p>
-                    <button><a href="?action=delete&id=<?php echo $buku['id']; ?>&table=books">Delete</a></button>
-                </p>
-            </div>
-            
-        <?php endforeach; ?>
-    </div>
-</section>
-
-
-<section>
-
-            
-
-</section>
-  <!-- Sisanya sesuai dengan kode yang sudah ada -->
-
-
-  
-
-
-  <script>
-  const navbar = document.querySelector('.nav');
-  const navbarToggle = document.querySelector('.navbar-toggle');
-  const initialToggleTop = parseFloat(getComputedStyle(navbarToggle).top);
-
-  navbarToggle.addEventListener('click', function() {
-    navbar.classList.toggle('open');
-  });
-
-  window.addEventListener('scroll', function() {
-    const scrollPos = window.scrollY;
-
-    if (scrollPos > 0) {
-      navbarToggle.style.top = initialToggleTop + scrollPos + 'px';
+    if ($result_book_promo->num_rows > 0) {
+        echo "<table class='table'>";
+        echo "<thead><tr><th>Judul Buku Promo</th><th>Penulis</th><th>Gambar</th><th>Kategori</th><th>Deskripsi</th><th>Aksi</th></tr></thead>";
+        echo "<tbody>";
+        while ($row_book_promo = $result_book_promo->fetch_assoc()) {
+            echo "<tr>
+                      <td>" . $row_book_promo["judul"] . "</td>
+                      <td>" . $row_book_promo["author"] . "</td>
+                      <td><img src='" . $row_book_promo["image"] . "' alt='Gambar Buku Promo' style='max-width: 100px;'></td>
+                      <td>" . $row_book_promo["kategori"] . "</td>
+                      <td>" . $row_book_promo["deskripsi"] . "</td>
+                      <td>
+                          <form action='delete_book_promo.php' method='post' style='display: inline;'>
+                              <input type='hidden' name='id' value='" . $row_book_promo["id"] . "'>
+                              <button type='submit' class='btn btn-danger' onclick='return confirm(\"Apakah Anda yakin ingin menghapus buku promo ini?\")'>Hapus</button>
+                          </form>
+                      </td>
+                  </tr>";
+        }
+        echo "</tbody>";
+        echo "</table>";
     } else {
-      navbarToggle.style.top = initialToggleTop + 'px';
+        echo "Belum ada buku promo yang diunggah.";
     }
-  });
+
+    $koneksi->close();
+    ?>
+</main>
+
+
+
+
+
+<!-- Modal Unggah File -->
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="uploadModalLabel">Unggah File</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="feature.php" method="post" enctype="multipart/form-data">
+                    <div class="row mb-3">
+                        <label for="tableChoice" class="col-sm-4 col-form-label">Pilih Tabel Tujuan:</label>
+                        <div class="col-sm-8">
+                            <select name="tableChoice" id="tableChoice" class="form-select">
+                                <option value="buku_best_seller">Book Best Seller</option>
+                                <option value="book_promo">Book Promo</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Hidden input for tableChoice -->
+                    <div class="row mb-3">
+                        <label for="title" class="col-sm-4 col-form-label">Judul Buku:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="title" id="title" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="author" class="col-sm-4 col-form-label">Penulis:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="author" id="author" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="price" class="col-sm-4 col-form-label">Harga:</label>
+                        <div class="col-sm-8">
+                            <input type="number" name="price" id="price" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="fileToUpload" class="col-sm-4 col-form-label">File:</label>
+                        <div class="col-sm-8">
+                            <input type="file" name="fileToUpload" id="fileToUpload" class="form-control">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="category" class="col-sm-4 col-form-label">Kategori:</label>
+                        <div class="col-sm-8">
+                            <select name="category" id="category" class="form-select" required>
+                                <option value="" disabled selected>Pilih Kategori</option>
+                                <option value="Komedi">Komedi</option>
+                                <option value="Religi">Religi</option>
+                                <option value="Fantasy">Fantasy</option>
+                                <option value="Adventure">Adventure</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="description" class="col-sm-4 col-form-label">Deskripsi:</label>
+                        <div class="col-sm-8">
+                            <textarea name="description" id="description" rows="3" class="form-control" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Form fields specific to book_promo -->
+                    
+
+                    <input type="submit" value="Unggah" name="submit" class="btn btn-primary">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+    <!-- Modal Hapus File -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Hapus File</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="delete_book_best_seller.php" method="post">
+                        <select name="id" id="fileToDelete">
+                            <?php
+                            include 'koneksi.php';
+
+                            $sql = "SELECT * FROM files ORDER BY upload_date DESC";
+                            $result = $koneksi->query($sql);
+
+                            while ($row = $result->fetch_assoc()) {
+                                echo "<option value='" . $row["id"] . "'>" . $row["filename"] . "</option>";
+                            }
+
+                            $koneksi->close();
+                            ?>
+                        </select>
+                        <input type="submit" value="Hapus" name="submit">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- Untuk Upload Form -->
+
+    <!-- Pilihan Database -->
+    <script>
+    // JavaScript to update hidden input value based on the selected dropdown option
+    const tableChoiceDropdown = document.getElementById('tableChoice');
+    const hiddenTableChoiceInput = document.getElementById('hiddenTableChoice');
+
+    // Update hidden input when the dropdown value changes
+    tableChoiceDropdown.addEventListener('change', function() {
+        hiddenTableChoiceInput.value = tableChoiceDropdown.value;
+    });
 </script>
 
+    <!-- ... (previous HTML code) -->
 
+<script>
+    // JavaScript to show/hide promo_fields based on the tableChoice
+    const tableChoice = document.getElementById("tableChoice");
+    const promoFields = document.getElementById("promoFields");
+
+    tableChoice.addEventListener("change", function () {
+        if (tableChoice.value === "book_promo") {
+            promoFields.style.display = "block";
+        } else {
+            promoFields.style.display = "none";
+        }
+    });
+</script>
+
+    <!-- Tambahkan link ke Bootstrap JS (Popper.js & Bootstrap.js) dan jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 </html>

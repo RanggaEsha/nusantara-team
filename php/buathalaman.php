@@ -481,7 +481,7 @@ foreach ($bukubest as $bookbest) {
   <form action="../checkoutupload.php" method="POST">
     <div class="container-item-detail">
       <div class="sub-container-1">
-            <a href=".' . $bookbest['image'] . '"><img id="imagePreview"  src=".' . $bookbest['image'] . '" alt="Gambar" name="gambar"></a>
+            <a href="' . $bookbest['image'] . '"><img id="imagePreview"  src="' . $bookbest['image'] . '" alt="Gambar" name="gambar"></a>
       </div>
       <div class="sub-container-2">
           <h1 id="judulPreview" name = "judul">' . $bookbest['title'] . '</h1>
