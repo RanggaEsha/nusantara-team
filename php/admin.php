@@ -355,19 +355,7 @@
 
     <!-- ... (previous HTML code) -->
 
-<script>
-    // JavaScript to show/hide promo_fields based on the tableChoice
-    const tableChoice = document.getElementById("tableChoice");
-    const promoFields = document.getElementById("promoFields");
 
-    tableChoice.addEventListener("change", function () {
-        if (tableChoice.value === "book_promo") {
-            promoFields.style.display = "block";
-        } else {
-            promoFields.style.display = "none";
-        }
-    });
-</script>
 
     <!-- Tambahkan link ke Bootstrap JS (Popper.js & Bootstrap.js) dan jQuery -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
