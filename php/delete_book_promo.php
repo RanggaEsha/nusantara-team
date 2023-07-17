@@ -2,7 +2,7 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["id"])) {
     $id = $_POST["id"];
 
-    include './php/koneksi.php'; // Menggunakan koneksi dari koneksi.php
+    include 'koneksi.php'; // Menggunakan koneksi dari koneksi.php
 
     // Get file path from the "buku_promo" table based on the ID
     $sql_get_file = "SELECT image FROM buku_promo WHERE id = $id";
