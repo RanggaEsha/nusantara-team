@@ -343,39 +343,7 @@
 
 
 
-    <!-- Modal Hapus File -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Hapus File</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form action="delete_book_best_seller.php" method="post">
-                        <select name="id" id="fileToDelete">
-                            <?php
-                            include 'koneksi.php';
-
-                            $sql = "SELECT * FROM files ORDER BY upload_date DESC";
-                            $result = $koneksi->query($sql);
-
-                            while ($row = $result->fetch_assoc()) {
-                                echo "<option value='" . $row["id"] . "'>" . $row["filename"] . "</option>";
-                            }
-
-                            $koneksi->close();
-                            ?>
-                        </select>
-                        <input type="submit" value="Hapus" name="submit">
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
 
 
