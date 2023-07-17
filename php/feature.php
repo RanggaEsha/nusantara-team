@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["fileToUpload"])) {
         $uploadOk = 0;
     }
 
-    // Check if file already exists in the selected directory
+    // Check if the file already exists
     if (file_exists($targetFile)) {
         echo "Maaf, file tersebut sudah ada.";
         $uploadOk = 0;
