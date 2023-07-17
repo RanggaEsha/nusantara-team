@@ -383,16 +383,7 @@
     <!-- Untuk Upload Form -->
 
     <!-- Pilihan Database -->
-    <script>
-    // JavaScript to update hidden input value based on the selected dropdown option
-    const tableChoiceDropdown = document.getElementById('tableChoice');
-    const hiddenTableChoiceInput = document.getElementById('hiddenTableChoice');
-
-    // Update hidden input when the dropdown value changes
-    tableChoiceDropdown.addEventListener('change', function() {
-        hiddenTableChoiceInput.value = tableChoiceDropdown.value;
-    });
-</script>
+   
 
     <!-- ... (previous HTML code) -->
 
